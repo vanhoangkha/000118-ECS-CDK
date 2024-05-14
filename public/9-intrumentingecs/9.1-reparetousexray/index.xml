@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> Preparing Productsservice Spring Boot for AWS X-Ray Usage on Start with Amazon VPC and AWS VPN Site-to-Site.</title>
+    <link>/9-intrumentingecs/9.1-reparetousexray/</link>
+    <description>Recent content in  Preparing Productsservice Spring Boot for AWS X-Ray Usage on Start with Amazon VPC and AWS VPN Site-to-Site.</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <atom:link href="/9-intrumentingecs/9.1-reparetousexray/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

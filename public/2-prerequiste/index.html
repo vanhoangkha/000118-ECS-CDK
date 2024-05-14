@@ -1,0 +1,2763 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.122.0">
+    <meta name="description" content="">
+<meta name="author" content="journeyoftheaverageguy@gmail.com">
+
+    <link rel="icon" href="../images/favicon.png" type="image/png">
+
+    <title>Preparation Steps :: Start with Amazon VPC and AWS VPN Site-to-Site.</title>
+
+    
+    <link href="../css/nucleus.css?1715692132" rel="stylesheet">
+    <link href="../css/fontawesome-all.min.css?1715692132" rel="stylesheet">
+    <link href="../css/hybrid.css?1715692132" rel="stylesheet">
+    <link href="../css/featherlight.min.css?1715692132" rel="stylesheet">
+    <link href="../css/perfect-scrollbar.min.css?1715692132" rel="stylesheet">
+    <link href="../css/auto-complete.css?1715692132" rel="stylesheet">
+    <link href="../css/atom-one-dark-reasonable.css?1715692132" rel="stylesheet">
+    <link href="../css/theme.css?1715692132" rel="stylesheet">
+    <link href="../css/hugo-theme.css?1715692132" rel="stylesheet">
+    
+    <link href="../css/theme-workshop.css?1715692132" rel="stylesheet">
+    
+    
+
+    <script src="../js/jquery-3.3.1.min.js?1715692132"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="../2-prerequiste/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="../">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="../js/lunr.min.js?1715692132"></script>
+<script type="text/javascript" src="../js/auto-complete.js?1715692132"></script>
+<script type="text/javascript">
+    
+        var baseurl = "";
+    
+</script>
+<script type="text/javascript" src="../js/search.js?1715692132"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-introduce/" title="Introduction" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../1-introduce/">
+          <b>1.</b>Introduction
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-prerequiste/" title="Preparation Steps" class="dd-item 
+        
+        active
+        
+        ">
+      <a href="../2-prerequiste/">
+          <b>2.</b>Preparation Steps
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-prerequiste/2.1-createinfrastructureproject/" title=" Creating an Infrastructure Project with AWS CDK" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../2-prerequiste/2.1-createinfrastructureproject/">
+          <b>2.1</b> Creating an Infrastructure Project with AWS CDK
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-prerequiste/2.2-createspingbootproject/" title=" Creating a Spring Boot Project" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../2-prerequiste/2.2-createspingbootproject/">
+          <b>2.2</b> Creating a Spring Boot Project
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-prerequiste/2.3-setupintellijidea/" title=" Setting Up IntelliJ IDEA" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../2-prerequiste/2.3-setupintellijidea/">
+          <b>2.3</b> Setting Up IntelliJ IDEA
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-prerequiste/2.4-createdockerfile/" title=" Create Dockerfile and Generate Docker Image" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../2-prerequiste/2.4-createdockerfile/">
+          <b>2.4</b> Create Dockerfile and Generate Docker Image
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-prerequiste/2.5-rundockerlocal/" title=" Run Docker Image on Local Machine" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../2-prerequiste/2.5-rundockerlocal/">
+          <b>2.5</b> Run Docker Image on Local Machine
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-createecr/" title=" Create AWS ECR Image Repository using AWS CDK" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../3-createecr/">
+          <b>3.</b> Create AWS ECR Image Repository using AWS CDK
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-createecr/3.1-createfirststack/" title=" Create First CloudFormation Stack" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../3-createecr/3.1-createfirststack/">
+          <b>3.1</b> Create First CloudFormation Stack
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-createecr/3.2-organizestack/" title=" Organize CDK Stack in CDK Project" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../3-createecr/3.2-organizestack/">
+          <b>3.2</b> Organize CDK Stack in CDK Project
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-createecr/3.3-implementstack/" title=" Deploy Stack to AWS ECR" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../3-createecr/3.3-implementstack/">
+          <b>3.3</b> Deploy Stack to AWS ECR
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-createecr/3.4-pushimage/" title=" Push Docker image to ECR" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../3-createecr/3.4-pushimage/">
+          <b>3.4</b> Push Docker image to ECR
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/4-createvpc/" title=" Create VPC and NAT Gateway using AWS CDK" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../4-createvpc/">
+          <b>4.</b> Create VPC and NAT Gateway using AWS CDK
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/4-createvpc/4.1-createvpc/" title=" Create VPC and Nat Gateway" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../4-createvpc/4.1-createvpc/">
+          <b>4.1</b> Create VPC and Nat Gateway
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/4-createvpc/4.2-orgaizestack/" title=" Organize and Deploy VPC Stack using AWS CDK" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../4-createvpc/4.2-orgaizestack/">
+          <b>4.2</b> Organize and Deploy VPC Stack using AWS CDK
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/5-createecs/" title="Create ECS using AWS CDK" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../5-createecs/">
+          <b>5.</b>Create ECS using AWS CDK
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/5-createecs/5.1-createecscluster/" title=" Create ECS Cluster" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../5-createecs/5.1-createecscluster/">
+          <b>5.1</b> Create ECS Cluster
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/5-createecs/5.2-createnlb/" title=" Create Network Load Balancer" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../5-createecs/5.2-createnlb/">
+          <b>5.2</b> Create Network Load Balancer
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/5-createecs/5.3-createvpclink/" title=" Create VPC Link" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../5-createecs/5.3-createvpclink/">
+          <b>5.3</b> Create VPC Link
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/5-createecs/5.4-createalb/" title=" Create Application Load Balancer" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../5-createecs/5.4-createalb/">
+          <b>5.4</b> Create Application Load Balancer
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/5-createecs/5.5-organizeanddeploystack/" title=" Organize and Deploy NLB Stack" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../5-createecs/5.5-organizeanddeploystack/">
+          <b>5.5</b> Organize and Deploy NLB Stack
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-createservice/" title="Create ECS Service with CDK" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../6-createservice/">
+          <b>6.</b>Create ECS Service with CDK
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-createservice/6.1-createnewstack/" title=" Create a New Stack for Product Service" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../6-createservice/6.1-createnewstack/">
+          <b>6.1</b> Create a New Stack for Product Service
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-createservice/6.2-createectask/" title=" Create ECS Task Definition" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../6-createservice/6.2-createectask/">
+          <b>6.2</b> Create ECS Task Definition
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-createservice/6.3-createsericelogdriver/" title=" Create Service Log Driver" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../6-createservice/6.3-createsericelogdriver/">
+          <b>6.3</b> Create Service Log Driver
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-createservice/6.4-addservicetotask/" title=" Add Container Service to Task Definition" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../6-createservice/6.4-addservicetotask/">
+          <b>6.4</b> Add Container Service to Task Definition
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-createservice/6.5-addlistenteralb/" title=" Add Listener to Application Load Balancer" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../6-createservice/6.5-addlistenteralb/">
+          <b>6.5</b> Add Listener to Application Load Balancer
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-createservice/6.6-createfagateservice/" title=" Create AWS Fargate Service" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../6-createservice/6.6-createfagateservice/">
+          <b>6.6</b> Create AWS Fargate Service
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-createservice/6.7-configtargergroup/" title=" Configure AWS ALB Target Group and Health Check Mechanism" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../6-createservice/6.7-configtargergroup/">
+          <b>6.7</b> Configure AWS ALB Target Group and Health Check Mechanism
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-createservice/6.8-confignlb/" title=" Configure AWS Network Load Balancer" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../6-createservice/6.8-confignlb/">
+          <b>6.8</b> Configure AWS Network Load Balancer
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-createservice/6.9-organizestack/" title=" Organize and Deploy Stack" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../6-createservice/6.9-organizestack/">
+          <b>6.9</b> Organize and Deploy Stack
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/7-createapigateway/" title=" Create API Gateway with CDK" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../7-createapigateway/">
+          <b>7.</b> Create API Gateway with CDK
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/7-createapigateway/7.1-createnew/" title=" Create API Gateway Resource" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../7-createapigateway/7.1-createnew/">
+          <b>7.1</b> Create API Gateway Resource
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/7-createapigateway/7.2-createfirstmethod/" title=" Create Product Resource and First Method" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../7-createapigateway/7.2-createfirstmethod/">
+          <b>7.2</b> Create Product Resource and First Method
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/7-createapigateway/7.3-organizestack/" title="Tổ chức Stack" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../7-createapigateway/7.3-organizestack/">
+           <b> 7.3 </b> Tổ chức Stack
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/8-createdynamodb/" title=" Create DynamoDB Table &#39;products&#39; using AWS CDK" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../8-createdynamodb/">
+          <b>8.</b> Create DynamoDB Table &#39;products&#39; using AWS CDK
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/8-createdynamodb/8.1-createdynamo/" title=" Create DynamoDB with CDK" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../8-createdynamodb/8.1-createdynamo/">
+          <b>8.1</b> Create DynamoDB with CDK
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/8-createdynamodb/8.2-post/" title=" Create REST operation to create a new Product" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../8-createdynamodb/8.2-post/">
+          <b>8.2</b> Create REST operation to create a new Product
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/8-createdynamodb/8.3-put/" title=" Create REST Operation to Update Product by ID" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../8-createdynamodb/8.3-put/">
+          <b>8.3</b> Create REST Operation to Update Product by ID
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/8-createdynamodb/8.4-getbyid/" title=" Create REST Operation to GET Product by ID" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../8-createdynamodb/8.4-getbyid/">
+          <b>8.4</b> Create REST Operation to GET Product by ID
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/8-createdynamodb/8.5-deletebyid/" title=" Create REST Operation to DELETE Product by ID" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../8-createdynamodb/8.5-deletebyid/">
+          <b>8.5</b> Create REST Operation to DELETE Product by ID
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/8-createdynamodb/8.6-configdynamodb/" title=" Configure DynamoDB" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../8-createdynamodb/8.6-configdynamodb/">
+          <b>8.6</b> Configure DynamoDB
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/8-createdynamodb/8.7-createcontroller/" title=" Create Product Repository" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../8-createdynamodb/8.7-createcontroller/">
+          <b>8.7</b> Create Product Repository
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/8-createdynamodb/8.8-createcontroller/" title=" Create Controller" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../8-createdynamodb/8.8-createcontroller/">
+          <b>8.8</b> Create Controller
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/8-createdynamodb/8.9-deploy/" title=" Perform Deployment for Testing" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../8-createdynamodb/8.9-deploy/">
+          <b>8.9</b> Perform Deployment for Testing
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/9-intrumentingecs/" title="Instrumenting AWS ECS Service with AWS X-Ray" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../9-intrumentingecs/">
+          <b>9.</b>Instrumenting AWS ECS Service with AWS X-Ray
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/9-intrumentingecs/9.1-reparetousexray/" title=" Preparing Productsservice Spring Boot for AWS X-Ray Usage" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../9-intrumentingecs/9.1-reparetousexray/">
+          <b>9.1</b> Preparing Productsservice Spring Boot for AWS X-Ray Usage
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/9-intrumentingecs/9.2-createxrayinspector/" title=" Creating X-Ray Inspector" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../9-intrumentingecs/9.2-createxrayinspector/">
+          <b>9.2</b> Creating X-Ray Inspector
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/9-intrumentingecs/9.3-addxraytotask/" title=" Adding X-Ray Sidecar to ProductsServices Task Definition" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../9-intrumentingecs/9.3-addxraytotask/">
+          <b>9.3</b> Adding X-Ray Sidecar to ProductsServices Task Definition
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/9-intrumentingecs/9.4-testimplement/" title="Testing the implementation" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../9-intrumentingecs/9.4-testimplement/">
+          <b>9.4</b>Testing the implementation
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/10-cleanresource/" title="Cleanup Resources" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../10-cleanresource/">
+          <b>10.</b>Cleanup Resources
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://aws.amazon.com/blogs"><i class='fab fa-aws'></i> AWS Study Group - Blog</a>
+              </li>
+          
+              <li> 
+                  <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj"><i class='fab fa-facebook'></i> AWS Study Group - FB Group</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="en" value="/2-prerequiste/" selected>English</option>
+                    
+                  
+              
+                  
+              
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="vi" value="/vi/2-prerequiste/">Tiếng Việt</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+      
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    
+     <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0" title="Migrate" Alt="web counter"   border="0" /></a>  <br>
+     <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0" title="Total CLoud Journey" Alt="web counter"   border="0"   />
+     
+</left>
+<left>
+    <br>
+    <br>
+        <b> Last Updated </b> <br>
+        <i><font color=orange>26-11-2023</font></i>
+    </left>
+    <left>
+        <br>
+        <br>
+            <b> Team </b> <br>
+            <i> <a href="https://www.linkedin.com/in/jotaguy"  style="color:orange">Gia Hưng </a> <br>
+        </i>
+        </left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            <a href='../'>Deploy Spring Boot applications onto AWS ECS Fargate using AWS CDK.</a> > Preparation Steps
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Preparation Steps
+            </h1>
+          
+
+        
+
+
+
+	<h4 id="preparation-steps">Preparation Steps</h4>
+<ol>
+<li>
+<p><strong>Java Development Kit (JDK)</strong></p>
+<ul>
+<li>Firstly, we need to install the <strong>Java Development Kit (JDK)</strong>. In this workshop, we will use <strong>JDK 21 LTS</strong>. You can download it <a href="https://www.oracle.com/java/technologies/downloads/#java21">here</a>.</li>
+<li>Next, we need to install <strong>Maven</strong>. You can install it following the instructions <a href="https://maven.apache.org/install.html">here</a>.</li>
+</ul>
+</li>
+<li>
+<p><strong>NodeJS</strong></p>
+<ul>
+<li>
+<p>To install the <strong>AWS CDK CLI</strong>, we need to install NodeJS. Visit <a href="https://nodejs.org/en/download/">this link</a> to download the latest LTS version.</p>
+</li>
+<li>
+<p>Verify if NodeJS is installed correctly by running the following command in the terminal:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>node -v
+</span></span></code></pre></div><p>This command will display the installed NodeJS version:</p>
+<pre tabindex="0"><code>v18.15.0
+</code></pre></li>
+<li>
+<p>Check the installed NPM version by running the following command in the terminal:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm -v
+</span></span></code></pre></div><p>This command will display the installed NPM version:</p>
+<pre tabindex="0"><code>9.6.2
+</code></pre></li>
+</ul>
+</li>
+<li>
+<p><strong>AWS CLI</strong></p>
+<ul>
+<li>
+<p>Visit <a href="https://aws.amazon.com/cli/">this link</a> and download the latest version of AWS CLI.</p>
+</li>
+<li>
+<p>After installation is complete, open a terminal and verify the installed AWS CLI version using the following command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>aws --version
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p><strong>AWS CDK</strong></p>
+<ul>
+<li>
+<p>AWS Cloud Development Kit, or AWS CDK, will be used to build infrastructure-as-code responsible for creating the application infrastructure using AWS services.</p>
+</li>
+<li>
+<p>After installing the above packages, run the following command in your terminal window to install AWS CDK:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm install -g aws-cdk
+</span></span></code></pre></div><ul>
+<li>Verify if CDK is installed correctly by running the following command in the terminal:</li>
+</ul>
+<pre tabindex="0"><code>cdk --version
+</code></pre></li>
+</ul>
+</li>
+<li>
+<p><strong>Postman</strong></p>
+<ul>
+<li>Postman is a very useful free application. By using it, you can send requests to the applications developed in this workshop, whether they are running on your computer or deployed on your AWS account.</li>
+<li>Download Postman based on the <a href="https://www.postman.com/">instructions</a>.</li>
+</ul>
+</li>
+<li>
+<p><strong>IntelliJ IDEA Community Edition</strong></p>
+<ul>
+<li>The IDE that will be used is IntelliJ IDEA Community Edition, from JetBrains. This is one of the most modern IDEs for development in Java and other programming languages.</li>
+<li>Download IntelliJ IDEA Community Edition from <a href="https://www.jetbrains.com/idea/download/?section=mac">this link</a>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Docker Desktop</strong></p>
+<ul>
+<li>Docker Desktop will be used to create Docker images of all applications to be built in this workshop before uploading the image to AWS.</li>
+<li>Download Docker via <a href="https://www.docker.com/products/docker-desktop/">this link</a>.</li>
+</ul>
+</li>
+</ol>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="../1-introduce/" title="Introduction"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="../2-prerequiste/2.1-createinfrastructureproject/" title=" Creating an Infrastructure Project with AWS CDK" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="../js/clipboard.min.js?1715692132"></script>
+    <script src="../js/perfect-scrollbar.min.js?1715692132"></script>
+    <script src="../js/perfect-scrollbar.jquery.min.js?1715692132"></script>
+    <script src="../js/jquery.sticky.js?1715692132"></script>
+    <script src="../js/featherlight.min.js?1715692132"></script>
+    <script src="../js/highlight.pack.js?1715692132"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../js/modernizr.custom-3.6.0.js?1715692132"></script>
+    <script src="../js/learn.js?1715692132"></script>
+    <script src="../js/hugo-learn.js?1715692132"></script>
+
+    <link href="../mermaid/mermaid.css?1715692132" rel="stylesheet" />
+    <script src="../mermaid/mermaid.js?1715692132"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

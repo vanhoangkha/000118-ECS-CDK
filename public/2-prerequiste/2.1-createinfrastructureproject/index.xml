@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> Creating an Infrastructure Project with AWS CDK on Start with Amazon VPC and AWS VPN Site-to-Site.</title>
+    <link>/2-prerequiste/2.1-createinfrastructureproject/</link>
+    <description>Recent content in  Creating an Infrastructure Project with AWS CDK on Start with Amazon VPC and AWS VPN Site-to-Site.</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <atom:link href="/2-prerequiste/2.1-createinfrastructureproject/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>
