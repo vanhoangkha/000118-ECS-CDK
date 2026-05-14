@@ -1,6 +1,6 @@
 ---
 title : "Tạo AWS ECR image repository bằng AWS CDK"
-date :  "`r Sys.Date()`" 
+date: 2024-01-01
 weight : 3
 chapter : false
 pre : " <b> 3. </b> "

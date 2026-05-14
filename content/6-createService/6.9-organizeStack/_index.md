@@ -1,6 +1,6 @@
 ---
 title: " Organize and Deploy Stack"
-date: "`r Sys.Date()`"
+date: 2024-01-01
 weight: 9
 chapter: false
 pre: "<b>6.9</b>"

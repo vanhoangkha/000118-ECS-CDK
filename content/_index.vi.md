@@ -1,6 +1,6 @@
 ---
 title : "Deploy Spring Boot applications onto AWS ECS Fargate using AWS CDK."
-date :  "`r Sys.Date()`" 
+date: 2024-01-01
 weight : 1 
 chapter : false
 ---

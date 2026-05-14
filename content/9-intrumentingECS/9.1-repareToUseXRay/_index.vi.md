@@ -1,6 +1,6 @@
 ---
 title : "Chuẩn bị Productsservice Spring Boot để sử dụng AWS X-Ray"
-date :  "`r Sys.Date()`" 
+date: 2024-01-01
 weight : 1
 chapter : false
 pre : " <b> 9.1 </b> "

@@ -1,6 +1,6 @@
 ---
 title: " Create REST Operation to GET Product by ID"
-date: "`r Sys.Date()`"
+date: 2024-01-01
 weight: 4
 chapter: false
 pre: "<b>8.4</b>"
