@@ -1,4 +1,4 @@
-# 🐳 ECS with CDK
+# ECS with CDK
 
 Deploy containerized applications on ECS using AWS CDK.
 
@@ -8,7 +8,7 @@ This is a hands-on workshop from the **AWS First Cloud Journey** series.
 
 ## Workshop
 
-📖 **[Start the workshop](https://vanhoangkha.github.io/000118-ECS-CDK/)**
+**[Start the workshop](https://vanhoangkha.github.io/000118-ECS-CDK/)**
 
 ## Prerequisites
 
